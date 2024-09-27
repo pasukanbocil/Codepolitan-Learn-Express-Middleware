@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 morgan = require("morgan");
 
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use((req, res, next) => {
-  req.timeRequest = Date.now();
+  //   req.timeRequest = Date.now();
   console.log(req.method, req.url);
   next();
 });
@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
 app.get("/halaman", (req, res) => {
   console.log(req.timeRequest);
   res.send("Hello Halaman");
+});
+
+app.use((req, res) => {
+  res.status(404).send("Not Found Page");
 });
 
 app.listen(3000, () => {
