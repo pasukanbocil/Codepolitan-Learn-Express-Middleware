@@ -9,19 +9,19 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
+const auth = (req, res, next) => {
   const { password } = req.query;
   if (password === "memek") {
     next();
   }
   res.send("Password salah");
-});
+};
 
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.get("/admin", (req, res) => {
+app.get("/admin", auth, (req, res) => {
   res.send("Hello Admin");
 });
 
