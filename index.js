@@ -8,8 +8,21 @@ app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
+
+app.use((req, res, next) => {
+  const { password } = req.query;
+  if (password === "memek") {
+    next();
+  }
+  res.send("Password salah");
+});
+
 app.get("/", (req, res) => {
   res.send("Hello World");
+});
+
+app.get("/admin", (req, res) => {
+  res.send("Hello Admin");
 });
 
 app.get("/halaman", (req, res) => {
