@@ -2,21 +2,18 @@ const express = require("express");
 const app = express();
 morgan = require("morgan");
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use((req, res, next) => {
-  console.log("Hello Middleware Pertama");
+  req.timeRequest = Date.now();
+  console.log(req.method, req.url);
   next();
-  console.log("Hello Middleware Pertama Seteleh next()");
 });
-app.use((req, res, next) => {
-    console.log("Hello Middleware kedua");
-    next();
-  });
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
 app.get("/halaman", (req, res) => {
+  console.log(req.timeRequest);
   res.send("Hello Halaman");
 });
 
