@@ -14,7 +14,8 @@ const auth = (req, res, next) => {
   if (password === "memek") {
     next();
   }
-  res.send("Password salah");
+  // res.send("Password salah");
+  throw new Error("Password Harus Diisi");
 };
 
 app.get("/", (req, res) => {
