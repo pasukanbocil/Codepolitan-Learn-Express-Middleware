@@ -22,6 +22,10 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+app.get("/error", (req, res) => {
+  bird.fly();
+});
+
 app.get("/admin", auth, (req, res) => {
   res.send("Hello Admin");
 });
@@ -29,6 +33,14 @@ app.get("/admin", auth, (req, res) => {
 app.get("/halaman", (req, res) => {
   console.log(req.timeRequest);
   res.send("Hello Halaman");
+});
+
+app.use((err, req, res, next) => {
+  console.log("*********************");
+  console.log("********ERROR********");
+  console.log("*********************");
+
+  next(err);
 });
 
 app.use((req, res) => {
