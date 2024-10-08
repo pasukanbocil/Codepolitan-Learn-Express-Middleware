@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 morgan = require("morgan");
 
+const ErrorHandler = require("./ErrorHandller");
+
 app.use(morgan("dev"));
 app.use((req, res, next) => {
   //   req.timeRequest = Date.now();
@@ -15,7 +17,7 @@ const auth = (req, res, next) => {
     next();
   }
   // res.send("Password salah");
-  throw new Error("Password Harus Diisi");
+  throw new ErrorHandler("Password Harus Diisi", 401);
 };
 
 app.get("/", (req, res) => {
@@ -35,12 +37,21 @@ app.get("/halaman", (req, res) => {
   res.send("Hello Halaman");
 });
 
-app.use((err, req, res, next) => {
-  console.log("*********************");
-  console.log("********ERROR********");
-  console.log("*********************");
+app.get("/general/error", (req, res) => {
+  throw new ErrorHandler();
+});
 
-  next(err);
+// app.use((err, req, res, next) => {
+//   console.log("*********************");
+//   console.log("********ERROR********");
+//   console.log("*********************");
+
+//   next(err);
+// });
+
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Something Went Error" } = err;
+  res.status(status).send(message);
 });
 
 app.use((req, res) => {
